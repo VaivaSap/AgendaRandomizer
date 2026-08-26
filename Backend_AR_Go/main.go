@@ -1,7 +1,13 @@
-package main 
+package main
 
-import "fmt"
+import (
+	"net/http"
+)
 
 func main() {
-    fmt.Println("Agenda randomizer starting <3")
+	http.HandleFunc("/activities", getActivitiesHandler)
+	http.HandleFunc("/randomize", randomizeActivitiesHandler)
+    http.ListenAndServe(":8080", nil)
 }
+
+
