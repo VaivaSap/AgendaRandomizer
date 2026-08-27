@@ -9,7 +9,11 @@ func randomizeActivities(activities []Activity) Activity {
 	var totalWeight float64 = 0
 
 	for _, activity := range activities {
-		totalWeight = totalWeight + activity.Hours
+		remainingHours := activity.TargetHours - activity.LoggedHours
+		if remainingHours <= 0 {
+			remainingHours = 0
+		}
+		totalWeight = totalWeight + remainingHours
 	}
 
 	var random = rand.Float64() * totalWeight
@@ -18,8 +22,14 @@ func randomizeActivities(activities []Activity) Activity {
 	var selectedActivity Activity
 
 	for _, activity := range activities {
-		if random-activity.Hours > 0 {
-			random = random - activity.Hours
+		remainingHours := activity.TargetHours - activity.LoggedHours
+
+		if remainingHours <= 0 { 
+			remainingHours = 0 
+		}
+
+		if random-remainingHours > 0 {
+			random = random - remainingHours
 		} else {
 			selectedActivity = activity
 			break
