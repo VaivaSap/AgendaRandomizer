@@ -20,6 +20,35 @@ function App() {
       .catch((error) => console.error("Error rolling:", error));
   };
 
+  const handleLoggedHours = () => {
+    if (!roll) return;
+
+    fetch("http://localhost:8080/log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        activity_name: roll.activity_name,
+        hours_spent: 1,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Log failed: " + response.status);
+        }
+
+        setActivities(
+          activities.map((activity) =>
+            activity.activity_name === roll.activity_name
+              ? { ...activity, logged_hours: activity.logged_hours + 1 }
+              : activity,
+          ),
+        );
+
+        setRoll({ ...roll, logged_hours: roll.logged_hours + 1 });
+      })
+      .catch((error) => console.error("Error logging hours:", error));
+  };
+
   return (
     <>
       <h1>Activities</h1>
@@ -40,6 +69,9 @@ function App() {
             {roll.activity_name} || Target: {roll.target_hours} / Spent:{" "}
             {roll.logged_hours}
           </p>
+          <button onClick={handleLoggedHours}>
+            Done 1h: {roll.activity_name}
+          </button>
         </div>
       )}
     </>
