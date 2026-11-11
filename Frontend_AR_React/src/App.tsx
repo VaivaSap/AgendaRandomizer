@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import type { Activity } from "./Activity";
 
+const API = `http://${window.location.hostname}:8080`;
+
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [roll, setRoll] = useState<Activity | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/activities")
+    fetch(`${API}/activities`)
       .then((response) => response.json())
       .then((data) => setActivities(data.activities))
       .catch((error) => console.error("Error fetching activities:", error));
   }, []);
 
   const handleRoll = () => {
-    fetch("http://localhost:8080/randomize")
+    fetch(`${API}/randomize`)
       .then((response) => response.json())
       .then((data) => setRoll(data))
       .catch((error) => console.error("Error rolling:", error));
@@ -23,7 +25,7 @@ function App() {
   const handleLoggedHours = () => {
     if (!roll) return;
 
-    fetch("http://localhost:8080/log", {
+    fetch(`${API}/log`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -57,6 +59,10 @@ function App() {
           <li key={activity.activity_name}>
             {activity.activity_name} || Target: {activity.target_hours} / Spent:{" "}
             {activity.logged_hours}
+            <progress
+              value={activity.logged_hours}
+              max={activity.target_hours}
+            ></progress>
           </li>
         ))}
       </ul>
