@@ -6,6 +6,13 @@ import (
 )
 
 func getActivitiesHandler(w http.ResponseWriter, r *http.Request) {
+
+	checkErr := checkWeeklyReset()
+	if checkErr != nil {
+		http.Error(w, checkErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	activities, err := readActivities("activitiesLog.json")
 
 	if err != nil {

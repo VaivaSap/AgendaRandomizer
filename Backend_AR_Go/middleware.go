@@ -6,7 +6,7 @@ func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var allowedOrigins []string = []string{
 			"http://localhost:5173",
-			"http://192.168.1.73:5173", //užkomentuoti prieš commit
+			"http://xxx.xxx.xxx.xxx:5173",
 		}
 
 		var origin string = r.Header.Get("Origin")
