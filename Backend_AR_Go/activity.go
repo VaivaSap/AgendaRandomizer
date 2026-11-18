@@ -5,3 +5,7 @@ type Activity struct {
 	TargetHours  float64 `json:"target_hours"`
 	LoggedHours  float64 `json:"logged_hours"`
 }
+
+type TrackingLog struct {
+	WeekStart string `json:"week_start"`
+}

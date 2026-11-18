@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import type { Activity } from "./Activity";
 
 const API = `http://${window.location.hostname}:8080`;
@@ -67,19 +66,21 @@ function App() {
         ))}
       </ul>
 
-      <button onClick={handleRoll}>What to do next?</button>
-      {roll && (
-        <div>
-          <h2>Rolled Activity</h2>
-          <p>
-            {roll.activity_name} || Target: {roll.target_hours} / Spent:{" "}
-            {roll.logged_hours}
-          </p>
-          <button onClick={handleLoggedHours}>
-            Done 1h: {roll.activity_name}
-          </button>
-        </div>
-      )}
+      <div className="roll-panel">
+        <button onClick={handleRoll}>What to do next?</button>
+        {roll && (
+          <div>
+            <p>Rolled Activity</p>
+            <p>
+              {roll.activity_name} || Target: {roll.target_hours} / Spent:{" "}
+              {roll.logged_hours}
+            </p>
+            <button className="logged-hours-button" onClick={handleLoggedHours}>
+              +1 {roll.activity_name}
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 }

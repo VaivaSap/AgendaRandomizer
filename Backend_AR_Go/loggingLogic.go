@@ -1,16 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-	"encoding/json"
 )
 
 func readActivities(filePath string) ([]Activity, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
-        return nil, err
+		return nil, err
 	}
 
 	var activities []Activity
@@ -21,7 +21,6 @@ func readActivities(filePath string) ([]Activity, error) {
 		return nil, err
 	}
 
-	fmt.Println(activities)
 	return activities, nil
 }
 

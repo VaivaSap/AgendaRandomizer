@@ -24,8 +24,8 @@ func randomizeActivities(activities []Activity) Activity {
 	for _, activity := range activities {
 		remainingHours := activity.TargetHours - activity.LoggedHours
 
-		if remainingHours <= 0 { 
-			remainingHours = 0 
+		if remainingHours <= 0 {
+			remainingHours = 0
 		}
 
 		if random-remainingHours > 0 {

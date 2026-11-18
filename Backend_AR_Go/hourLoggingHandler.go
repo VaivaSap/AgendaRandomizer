@@ -27,8 +27,6 @@ func hourLoggingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(logRequest)
-
 	activities, err := readActivities("activitiesLog.json")
 
 	if err != nil {
@@ -36,10 +34,8 @@ func hourLoggingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(activities)
 	activityFound := false
 	for index, value := range activities {
-		fmt.Println(index, value)
 
 		if value.ActivityName == logRequest.ActivityName {
 			activities[index].LoggedHours += logRequest.HoursSpent
